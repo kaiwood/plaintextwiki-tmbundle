@@ -53,12 +53,6 @@ class PlainTextWiki
     def touch_file(dir, pagename)
       FileUtils.mkdir_p(dir)
       FileUtils.touch("#{dir}/#{pagename}#{EXT}")
-      refresh
-    end
-
-    # switch away from TextMate and back to refresh the project drawer
-    def refresh
-      `osascript -e 'tell application "Dock" to activate'; osascript -e 'tell application "TextMate" to activate'`
     end
 
     def open_in_tm(fn)
