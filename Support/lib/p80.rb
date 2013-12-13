@@ -5,7 +5,7 @@ module Kernel
     yield if block_given?
     puts '*' * 80
   end
-  
+
   def p80f(*args)
     File.open("/tmp/wiki.log", "w") do |f|
       f.puts '*' * 80
