@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+	<string>#!/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby
 require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/wiki.rb"
 puts PlainTextWiki.new(ENV['TM_DIRECTORY']).linked_page_list
 </string>
