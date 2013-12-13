@@ -37,7 +37,7 @@ class PlainTextWiki
   end
 
   def go_to_index_page
-      go_to("IndexPage")
+    go_to("IndexPage")
   end
 
   def go_to(pagename)
@@ -60,7 +60,7 @@ class PlainTextWiki
   end
 
   def linked_page_list
-      pages.map { |p| "* [[#{p}]]" }.join("\n")
+    pages.map { |p| "* [[#{p}]]" }.join("\n")
   end
 
   def export_as_html
@@ -105,11 +105,11 @@ class PlainTextWiki
   end
 
   def templates_dir
-      "#{ENV['TM_BUNDLE_SUPPORT']}/templates"
+    "#{ENV['TM_BUNDLE_SUPPORT']}/templates"
   end
 
   def pages
-      @pages ||= load_pages
+    @pages ||= load_pages
   end
 
   def is_absolute_link?(pagename)
@@ -135,40 +135,40 @@ class PlainTextWiki
   end
 
   def wiki_header
-      d = File.file?("#{dir}/wiki-header.html") ? dir : templates_dir
-      open("#{d}/wiki-header.html", "r").read
+    d = File.file?("#{dir}/wiki-header.html") ? dir : templates_dir
+    open("#{d}/wiki-header.html", "r").read
   end
 
   def wiki_footer
-      d = File.file?("#{dir}/wiki-footer.html") ? dir : templates_dir
-      open("#{d}/wiki-footer.html", "r").read
+    d = File.file?("#{dir}/wiki-footer.html") ? dir : templates_dir
+    open("#{d}/wiki-footer.html", "r").read
   end
 
   def wiki_styles_path
-      d = File.file?("#{dir}/wiki-styles.css") ? dir : templates_dir
-      "#{d}/wiki-styles.css"
+    d = File.file?("#{dir}/wiki-styles.css") ? dir : templates_dir
+    "#{d}/wiki-styles.css"
   end
 
   def with_html_links(filename, export_dir)
-      # This match recognises HTML links, and delimited then camelcase pagenames. Each is treated differently
-      open(filename, 'r').read.gsub(
-          / (<a .+?<\/a>) # 1, HTML capture
-          | ((http:\/\/.+?)(\s$)) # 2, 3, 4 http construct
-          | (\[\[(.+?)\]\]) # 5, 6, delimited capture
-          | (\b([A-Z][a-z]+([A-Z][a-z]*)+)\b) # 7 camelcase
-          /x ) do |m|
-          if $1
-              $1
-          elsif $3
-              %Q[<a href="#{URI.escape($3)}">#{URI.escape($3)}</a>#{$4}]
-          else
-              pagename = $6 ? $6.tr("[]", "") : $7
-              if (!pages.include?(pagename)) and (pages.map { |p| p.downcase }.include? pagename.downcase)
-                  pagename = pages.select { |p| p.downcase == pagename.downcase }.first
-              end
-              %Q[<a href="#{export_dir}#{link(pagename, filename)}#{EXPORT_EXT}">#{pagename}</a>]
-          end
+    # This match recognises HTML links, and delimited then camelcase pagenames. Each is treated differently
+    open(filename, 'r').read.gsub(
+      / (<a .+?<\/a>) # 1, HTML capture
+      | ((http:\/\/.+?)(\s$)) # 2, 3, 4 http construct
+      | (\[\[(.+?)\]\]) # 5, 6, delimited capture
+      | (\b([A-Z][a-z]+([A-Z][a-z]*)+)\b) # 7 camelcase
+      /x ) do |m|
+      if $1
+        $1
+      elsif $3
+        %Q[<a href="#{URI.escape($3)}">#{URI.escape($3)}</a>#{$4}]
+      else
+        pagename = $6 ? $6.tr("[]", "") : $7
+        if (!pages.include?(pagename)) and (pages.map { |p| p.downcase }.include? pagename.downcase)
+          pagename = pages.select { |p| p.downcase == pagename.downcase }.first
+        end
+        %Q[<a href="#{export_dir}#{link(pagename, filename)}#{EXPORT_EXT}">#{pagename}</a>]
       end
+    end
   end
 
   def link(pagename, filename)
