@@ -179,7 +179,6 @@ class PlainTextWiki
     return @transform if @transform
     case EXPORT_FORMAT
       when "markdown"
-        puts "opsops"
         require "#{ENV['TM_SUPPORT_PATH']}/lib/bluecloth.rb"
         require "#{ENV['TM_SUPPORT_PATH']}/lib/rubypants.rb"
         @transform = Proc.new { |s| RubyPants.new(BlueCloth.new(s).to_html).to_html }
