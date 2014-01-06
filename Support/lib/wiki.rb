@@ -79,7 +79,7 @@ class PlainTextWiki
     end
 
     # Copy the stylesheet over
-    FileUtils.copy("#{wiki_styles_path}", "#{export_dir}/wiki-styles.css")
+    FileUtils.copy("#{wiki_styles_path}", "#{export_dir}/wiki-styles.css") unless File.exists?("#{export_dir}/wiki-styles.css")
 
     # Open the exported wiki in the default HTML viewer
     `open #{export_dir}/IndexPage#{EXPORT_EXT}`
