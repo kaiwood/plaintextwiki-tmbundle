@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby18
 require 'fileutils'
+require 'pathname'
 require 'uri'
 
 class PlainTextWiki
@@ -51,7 +52,8 @@ class PlainTextWiki
   end
 
   def touch_file(dir, pagename)
-    FileUtils.mkdir_p(dir)
+    path = dir + '/' + Pathname.new(pagename).parent.to_s
+    FileUtils.mkdir_p(path)
     FileUtils.touch("#{dir}/#{pagename}#{EXT}")
   end
 
